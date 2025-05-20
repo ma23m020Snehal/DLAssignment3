@@ -189,9 +189,11 @@ def main(args):
 
     # DataLoaders
     train_ds = TransliterationDataset(train_pairs, s2i, t2i, max_src, max_tgt)
-    dev_ds = TransliterationDataset(dev_pairs, s2i, t2i, max_src, max_tgt)
+    dev_ds   = TransliterationDataset(dev_pairs,   s2i, t2i, max_src, max_tgt)
+    test_ds  = TransliterationDataset(test_pairs,  s2i, t2i, max_src, max_tgt)
     train_loader = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True)
-    dev_loader = DataLoader(dev_ds, batch_size=args.batch_size)
+    dev_loader   = DataLoader(dev_ds,   batch_size=args.batch_size)
+    test_loader  = DataLoader(test_ds,  batch_size=args.batch_size)
 
     # Config dict
     config = {
@@ -210,18 +212,18 @@ def main(args):
     criterion = nn.CrossEntropyLoss(ignore_index=PAD)
     optimizer = optim.Adam(model.parameters(), lr=args.lr)
 
-    # Evaluation function
-    def evaluate():
+        # Evaluation function
+    def evaluate(loader):
         model.eval()
         corr_chars = tot_chars = corr_words = tot_words = 0
         with torch.no_grad():
-            for src, tgt in dev_loader:
+            for src, tgt in loader:
                 src, tgt = src.to(DEVICE), tgt.to(DEVICE)
                 logits = model(src, tgt if args.attention else tgt[:, :-1])
                 preds = logits.argmax(-1)
 
                 # character accuracy
-                gold = tgt[:, 1:] if not args.attention else tgt
+                gold = tgt if args.attention else tgt[:, 1:]
                 mask = gold != PAD
                 corr_chars += (preds == gold).masked_select(mask).sum().item()
                 tot_chars += mask.sum().item()
@@ -252,12 +254,16 @@ def main(args):
             epoch_loss += loss.item()
 
         train_loss = epoch_loss / len(train_loader)
-        val_char_acc, val_word_acc = evaluate()
+        val_char_acc, val_word_acc = evaluate(dev_loader)
         print(f"Epoch {epoch} | Train Loss: {train_loss:.4f} | Val Char Acc: {val_char_acc:.4f} | Val Word Acc: {val_word_acc:.4f}")
 
     # Save best model
     torch.save(model.state_dict(), "best_model.pt")
     print("Model saved to best_model.pt")
+
+    # Evaluate on test set
+    test_char_acc, test_word_acc = evaluate(test_loader)
+    print(f"Test Char Acc: {test_char_acc:.4f} | Test Word Acc: {test_word_acc:.4f}")
 
 # ----------------------------
 # Argument Parser

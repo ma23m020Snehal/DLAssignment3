@@ -76,11 +76,92 @@ lr             = 1e-3
 tf_ratio       = 1.0
 ```
 
-How to Run
-Method 1: Use train.py
-Train either model with Weights & Biases sweep:
+## How to Run
 
-????????????????????????????????????????????
+# Training and Evaluation
+
+Run train.py with appropriate flags. 
+
+The script will:
+
+1. Load and preprocess the data.
+
+2. Build character vocabularies (with <pad>, <sos>, <eos>, <unk> tokens).
+
+3. Train for the specified number of epochs.
+
+4. Print training loss and validation accuracies per epoch.
+
+5. Save the best model to best_model.pt.
+
+6. Evaluate the best model on the test dataset
+
+## How to Run `train.py`
+
+### Required Arguments:
+| Argument         | Description                                  |
+|------------------|----------------------------------------------|
+| `--train_path`   | Path to the training `.tsv` file             |
+| `--dev_path`     | Path to the development `.tsv` file          |
+| `--test_path`    | Path to the test `.tsv` file                 |
+
+### Optional Arguments:
+| Argument             | Description                                       | Default     |
+|----------------------|---------------------------------------------------|-------------|
+| `--attention`        | Use attention-based decoder                       | *Disabled*  |
+| `--bidirectional`    | Use bidirectional encoder                         | *Disabled*  |
+| `--embedding_dim`    | Embedding dimension                               | `256`       |
+| `--hidden_size`      | Hidden state dimension                            | `256`       |
+| `--epochs`           | Number of training epochs                         | `10`        |
+| `--batch_size`       | Batch size for training and evaluation            | `32`        |
+| `--cell_type`        | RNN cell type: `RNN`, `GRU`, or `LSTM`            | `LSTM`      |
+| `--dropout`          | Dropout rate (used internally in attention model) | `0.3`       |
+| `--lr`               | Learning rate                                     | `0.001`     |
+
+###  Commands
+
+#### Run Vanilla Seq2Seq Model:
+```
+python train.py \
+  --train_path data/hi.translit.sampled.train.tsv \
+  --dev_path data/hi.translit.sampled.dev.tsv \
+  --test_path data/hi.translit.sampled.test.tsv
+```
+**--attention** enables Bahdanau attention (default is vanilla Seq2Seq).
+
+**--bidirectional** uses a bidirectional encoder (ignored if not specified).
+
+
+## Examples
+# Vanilla Seq2Seq (no attention)
+```
+python train.py \
+  --train_path data/hi.translit.sampled.train.tsv \
+  --dev_path   data/hi.translit.sampled.dev.tsv \
+  --test_path  data/hi.translit.sampled.test.tsv \
+  --batch_size 64 \
+  --epochs 10 \
+  --embedding_dim 256 \
+  --hidden_size 256 \
+  --cell_type LSTM \
+  --lr 1e-3
+```
+# Seq2Seq with Attention
+```
+python train.py \
+  --train_path data/hi.translit.sampled.train.tsv \
+  --dev_path   data/hi.translit.sampled.dev.tsv \
+  --test_path  data/hi.translit.sampled.test.tsv \
+  --batch_size 64 \
+  --epochs 10 \
+  --embedding_dim 256 \
+  --hidden_size 256 \
+  --cell_type LSTM \
+  --lr 1e-3 \
+  --attention \
+  --bidirectional
+
+```
 
 Method 2: Use .ipynb on Kaggle/Colab
 
