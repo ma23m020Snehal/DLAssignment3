@@ -228,11 +228,11 @@ DL_Assignment_3/
 
 ```
 ## Files info
-q1to4-ass3-without-attention.ipynb - The main ipynb file containing the source code along with wandb sweeps for hyperparameter tuning without attention
- Q5 with-attention.ipynb - The main ipynb file containing the source code along with wandb sweeps for hyperparameter tuning with attention
-train.py - Python file to train and run the code
-prediction_vanilla.csv - Predicted data of the test set without attention
-predictions_attn.csv - Predictions of the test set with Attention
+# q1to4-ass3-without-attention.ipynb - The main ipynb file containing the source code along with wandb sweeps for hyperparameter tuning without attention
+# Q5 with-attention.ipynb - The main ipynb file containing the source code along with wandb sweeps for hyperparameter tuning with attention
+# train.py - Python file to train and run the code
+# prediction_vanilla.csv - Predicted data of the test set without attention
+# predictions_attn.csv - Predictions of the test set with Attention
 
 ## Output Files
 
