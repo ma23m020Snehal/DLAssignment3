@@ -129,17 +129,7 @@ Improved Rare Sequence Handling: Attention improves transliteration of rare or l
 Better Performance: Fewer vowel/consonant misplacements (e.g., "ankganit" → "अंकगणित")
 
 
-## Output Files
-
-predictions_vanilla.csv: Model predictions from the vanilla model
-
-
-predictions_attention.csv: Predictions from attention-based model
-
-Can be downloaded via githib
-
-
-Folder Structure
+## Folder Structure
 
 ```
 DL_Assignment_3/
@@ -156,7 +146,21 @@ DL_Assignment_3/
 ├── venv/ 
 
 ```
+## Files info
+q1to4-ass3-without-attention.ipynb - The main ipynb file containing the source code along with wandb sweeps for hyperparameter tuning without attention
+ Q5 with-attention.ipynb - The main ipynb file containing the source code along with wandb sweeps for hyperparameter tuning with attention
+train.py - Python file to train and run the code
+prediction_vanilla.csv - Predicted data of the test set without attention
+predictions_attn.csv - Predictions of the test set with Attention
 
+## Output Files
+
+predictions_vanilla.csv: Model predictions from the vanilla model
+
+
+predictions_attention.csv: Predictions from attention-based model
+
+Can be downloaded via githib
  Author
 Snehal
 MA23M020
