@@ -197,7 +197,7 @@ Model	                     Exact Match Accuracy (Test)
 
 Vanilla Seq2Seq          	~0.3994 
 
-Attention Seq2Seq	        ~0.4240
+Attention Seq2Seq	        ~0.4371
 
 
 
@@ -220,7 +220,7 @@ DL_Assignment_3/
 │ └── predictions_vanilla.csv
 ├── attention_grid_heat_maps.png
 ├── q1to4-ass3-without-attention.ipynb
-├── Q5 with-attention.ipynb
+├── with-attentionQ5,6.ipynb
 ├── train.py
 ├── README.md
 ├── .gitignore
@@ -229,7 +229,7 @@ DL_Assignment_3/
 ```
 ## Files info
 # q1to4-ass3-without-attention.ipynb - The main ipynb file containing the source code along with wandb sweeps for hyperparameter tuning without attention
-# Q5 with-attention.ipynb - The main ipynb file containing the source code along with wandb sweeps for hyperparameter tuning with attention
+# with-attention Q5,6.ipynb - The main ipynb file containing the source code along with wandb sweeps for hyperparameter tuning with attention
 # train.py - Python file to train and run the code
 # prediction_vanilla.csv - Predicted data of the test set without attention
 # predictions_attn.csv - Predictions of the test set with Attention
